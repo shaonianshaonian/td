@@ -36,7 +36,6 @@ class test_Exclusives(Exclusives):
         self.r = requests.post(url=self.url, data=self.data)
         print(self.r.status_code)
         print(self.r.json())
-        self.assertIn('投诉成功',self.r.text)
         self.assertIn('200',self.r.text)
 if __name__ == 'main':
     unittest.main

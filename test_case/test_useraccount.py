@@ -4,33 +4,12 @@ import unittest
 import json
 
 
-class UserAccount(unittest.TestCase):
-    def setUp(self):
-        print("start test")
-        pass
+url1 = "https://www.jsj1314.cn:8443/loginua/newLogin?appIdentifierType=1&appIdentifier=oBUWywbjvH7fhwd4frplce6NXKVk"
+r1 = requests.post(url=url1)
+cook = r1.cookies # 获取登录后的cookies
 
-    def tearDown(self):
-        print("end test")
-        pass
-
-
-class test_UserAccount(UserAccount):
+class test_UserAccount(unittest.TestCase):
     """接口名：登录接口"""
-    def test_login1(self):
-        """测试用例：平台登录"""
-        self.url = "https://www.jsj1314.cn:8443/loginua/newLogin"
-        self.data = {
-            'appIdentifierType': '0',
-            'appIdentifier': '17628090406',
-            'appCredential': '797979'
-        }
-        self.r1 = requests.post(url=self.url, data=self.data)
-        print(self.r1.json())
-        print(self.r1.status_code)
-        self.assertIn('成都市武侯区福锦断段58号4栋1单元', self.r1.text)
-        self.assertIn('1200000278', self.r1.text)
-        self.assertIn('phone', self.r1.text)
-
     def test_loginCase1(self):
         """测试用例：手机号码未注册"""
         self.url = "https://www.jsj1314.cn:8443/loginua/newLogin"
@@ -153,17 +132,15 @@ class test_UserAccount(UserAccount):
 
     def test_ChangeUser(self,):
         """测试用例：修改昵称"""
-        url1 = "https://www.jsj1314.cn:8443/loginua/newLogin?appIdentifierType=1&appIdentifier=oBUWywbjvH7fhwd4frplce6NXKVk"
-        r1 = requests.post(url=url1)
-        cook = r1.cookies
         self.url = "https://www.jsj1314.cn:8443/manageua/changeUser"
         self.data = {
             'nickName': "123"
         }
-        self.r = requests.post(url=self.url, data=self.data,cookies= cook)
+        self.r = requests.post(url=self.url, data=self.data,cookies=cook)
         print(self.r.json())
         print(self.r.status_code)
         self.assertIn("123", self.r.text)
+        self.assertIn('nickName', self.r.text)
 
 if __name__ == 'main':
     unittest.main
