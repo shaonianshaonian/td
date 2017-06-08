@@ -112,6 +112,7 @@ class test_UserAccount(unittest.TestCase):
         self.r = requests.post(url=self.url, data=self.data)
         print(self.r.json())
         print(self.r.status_code)
+
         self.assertIn('成都市武侯区福锦断段58号4栋1单元', self.r.text)
         self.assertIn('1200000278', self.r.text)
         self.assertIn('phone', self.r.text)
@@ -134,13 +135,13 @@ class test_UserAccount(unittest.TestCase):
         """测试用例：修改昵称"""
         self.url = "https://www.jsj1314.cn:8443/manageua/changeUser"
         self.data = {
-            'nickName': "123"
+            'nickName': "1234"
         }
         self.r = requests.post(url=self.url, data=self.data,cookies=cook)
         print(self.r.json())
         print(self.r.status_code)
-        self.assertIn("123", self.r.text)
-        self.assertIn('nickName', self.r.text)
-
+        # self.assertIn("1234", self.r.text)
+        self.assertEqual('17628090406',self.r.json()["phone"])
+        # self.assertIn('nickName', self.r.text)
 if __name__ == 'main':
     unittest.main
